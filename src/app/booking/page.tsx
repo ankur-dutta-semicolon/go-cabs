@@ -1,7 +1,8 @@
 'use client';
-
+export const dynamic = 'force-dynamic'
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+
 
 type Tab = "ONE WAY" | "ROUND TRIP" | "LOCAL" | "AIRPORT";
 type VehicleKey = "HATCHBACK" | "SEDAN" | "SUV" | "INNOVA";
