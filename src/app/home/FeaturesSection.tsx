@@ -39,10 +39,10 @@ export const FeaturesSection = () => {
         className="absolute inset-0 z-0 bg-cover bg-center bg-fixed"
         style={{
           backgroundImage:
-            "url(https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=2000)",
+            "url(/images/features-bg.webp)",
         }}
       >
-        <div className="absolute inset-0 bg-black/80" />
+        {/* <div className="absolute inset-0 bg-black/80" /> */}
       </div>
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 w-full">

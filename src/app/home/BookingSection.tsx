@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
+import { useRouter } from "next/navigation";
 
 type Tab = "ONE WAY" | "ROUND TRIP" | "LOCAL" | "AIRPORT";
 
@@ -106,24 +107,24 @@ function calcFare(distanceKm: number, v: Vehicle) {
 
 type Quote =
   | {
-    kind: "OUTSTATION";
-    key: VehicleKey;
-    name: string;
-    price: number;
-    distanceKm: number;
-  }
+      kind: "OUTSTATION";
+      key: VehicleKey;
+      name: string;
+      price: number;
+      distanceKm: number;
+    }
   | {
-    kind: "LOCAL";
-    key: VehicleKey;
-    name: string;
-    packageKey: LocalPackageKey;
-    packageLabel: string;
-    hoursIncluded: number;
-    kmIncluded: number;
-    basePrice: number;
-    postKmRate: number;
-    postHrRate: number;
-  };
+      kind: "LOCAL";
+      key: VehicleKey;
+      name: string;
+      packageKey: LocalPackageKey;
+      packageLabel: string;
+      hoursIncluded: number;
+      kmIncluded: number;
+      basePrice: number;
+      postKmRate: number;
+      postHrRate: number;
+    };
 
 /* ================== GOOGLE MAPS LOADER (SIMPLE + CACHED) ================== */
 
@@ -169,6 +170,8 @@ async function getDrivingDistanceKm(origin: string, destination: string) {
 /* ================== COMPONENT ================== */
 
 export default function BookingSection() {
+  const router = useRouter();
+
   const [activeTab, setActiveTab] = useState<Tab>("ONE WAY");
 
   // ONE WAY
@@ -215,13 +218,6 @@ export default function BookingSection() {
     }
   };
 
-  /* ================== MODAL STATE ================== */
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loadingQuotes, setLoadingQuotes] = useState(false);
-  const [quoteError, setQuoteError] = useState<string | null>(null);
-  const [quotes, setQuotes] = useState<Quote[]>([]);
-
   React.useEffect(() => {
     loadGoogleMaps().catch(console.error);
   }, []);
@@ -234,11 +230,10 @@ export default function BookingSection() {
       const a = pickupAddress.trim();
       const b = dropAirport.trim();
 
+      // (for now same mapping as your current code)
       if (airportTrip === "Drop to Airport") {
-        // pickup address -> airport
         return { origin: a, destination: b };
       } else {
-        // airport -> drop address
         return { origin: a, destination: b };
       }
     }
@@ -246,58 +241,24 @@ export default function BookingSection() {
     return { origin: "", destination: "" };
   }
 
-  async function openQuotesModal() {
-    setIsModalOpen(true);
-    setLoadingQuotes(true);
-    setQuoteError(null);
-    setQuotes([]);
+  function goToResultsPage() {
+    const params = new URLSearchParams();
+    params.set("tab", activeTab);
 
-    try {
-      // ✅ LOCAL = package pricing (no directions)
-      if (activeTab === "LOCAL") {
-        const c = city.trim();
-        if (!c) throw new Error("Please enter/select a city.");
+    params.set("pickupDate", pickupDate);
+    params.set("pickupTime", pickupTime);
+    params.set("returnDate", returnDate);
 
-        const pkg = LOCAL_PACKAGES.find((p) => p.key === localPkg) ?? LOCAL_PACKAGES[0];
-
-        const computed = VEHICLES.map((v) => ({
-          kind: "LOCAL" as const,
-          key: v.key,
-          name: v.name,
-          packageKey: pkg.key,
-          packageLabel: pkg.label,
-          hoursIncluded: pkg.hoursIncluded,
-          kmIncluded: pkg.kmIncluded,
-          basePrice: v.local.baseByPackage[pkg.key],
-          postKmRate: v.local.postKmRate,
-          postHrRate: v.local.postHrRate,
-        })).sort((a, b) => a.basePrice - b.basePrice);
-
-        setQuotes(computed as any); // (we’ll fix types below if needed)
-        return;
-      }
-
-      // OUTSTATION / AIRPORT / ROUND TRIP
+    if (activeTab === "LOCAL") {
+      params.set("city", city.trim());
+      params.set("localPkg", localPkg);
+    } else {
       const { origin, destination } = buildOriginDestination();
-      if (!origin || !destination) throw new Error("Please fill Pickup and Drop correctly.");
-
-      let distanceKm = await getDrivingDistanceKm(origin, destination);
-      if (activeTab === "ROUND TRIP") distanceKm = distanceKm * 2;
-
-      const computed: Quote[] = VEHICLES.map((v) => ({
-        kind: "OUTSTATION" as const, // ✅ IMPORTANT
-        key: v.key,
-        name: v.name,
-        distanceKm,
-        price: calcFare(distanceKm, v),
-      })).sort((a, b) => (a.kind === "OUTSTATION" && b.kind === "OUTSTATION" ? a.price - b.price : 0));
-
-      setQuotes(computed);
-    } catch (e: any) {
-      setQuoteError(e?.message || "Something went wrong");
-    } finally {
-      setLoadingQuotes(false);
+      params.set("origin", origin);
+      params.set("destination", destination);
     }
+
+    router.push(`/select-cab?${params.toString()}`);
   }
 
   /* ================== PLACES INPUT ================== */
@@ -388,7 +349,6 @@ export default function BookingSection() {
     );
 
     if (activeTab === "ONE WAY") {
-      // Replicated ROUND TRIP flex-wrap layout
       return (
         <div className="flex flex-wrap items-end gap-x-10 gap-y-8">
           <div className="min-w-[180px] flex-1">
@@ -403,7 +363,6 @@ export default function BookingSection() {
                 <SearchIcon />
               </span>
             </div>
-            {/* <HelperError text="Please select from Dropdown" /> */}
           </div>
 
           {swapButton}
@@ -478,7 +437,6 @@ export default function BookingSection() {
     }
 
     if (activeTab === "LOCAL") {
-      // Replicated ROUND TRIP flex-wrap layout
       return (
         <div className="flex flex-wrap items-end gap-x-10 gap-y-8">
           <div className="min-w-[220px] flex-1">
@@ -512,7 +470,6 @@ export default function BookingSection() {
     // AIRPORT
     const isDropToAirport = airportTrip === "Drop to Airport";
 
-    // Replicated ROUND TRIP flex-wrap layout for AIRPORT
     return (
       <div className="flex flex-wrap items-end gap-x-10 gap-y-8">
         <div className="min-w-[170px] flex-1">
@@ -522,7 +479,6 @@ export default function BookingSection() {
               value={airportTrip}
               onChange={(e) => {
                 const newValue = e.target.value as "Drop to Airport" | "Pickup from Airport";
-
                 setAirportTrip(newValue);
 
                 // ✅ Clear fields when switching trip type
@@ -553,7 +509,6 @@ export default function BookingSection() {
               <SearchIcon />
             </span>
           </div>
-          {/* <HelperError text="Please select from Dropdown" /> */}
         </div>
 
         <div className="min-w-[220px] flex-1">
@@ -571,7 +526,6 @@ export default function BookingSection() {
               <XIcon />
             </span>
           </div>
-          {/* <HelperError text="Please select from Dropdown" /> */}
         </div>
 
         <div className="min-w-[150px] flex-1">
@@ -629,191 +583,13 @@ export default function BookingSection() {
         <div className="mt-10 flex justify-center gap-4">
           <button
             type="button"
-            onClick={openQuotesModal}
+            onClick={goToResultsPage}
             className="rounded-xl bg-black px-16 py-5 text-base font-extrabold tracking-widest text-yellow-400 shadow-xl hover:opacity-95"
           >
             EXPLORE CABS
           </button>
-
-          {/* TEMP TEST BUTTON (remove later) */}
-          {/* <button
-            type="button"
-            onClick={async () => {
-              try {
-                const km = await getDrivingDistanceKm("Durgapur, West Bengal", "Asansol, West Bengal");
-                alert(`Distance: ${km.toFixed(1)} km`);
-              } catch (e: any) {
-                alert(e?.message || "Error");
-              }
-            }}
-            className="rounded-xl bg-white px-6 py-5 text-base font-extrabold tracking-widest text-black shadow-xl hover:bg-neutral-50"
-          >
-            TEST DISTANCE
-          </button> */}
         </div>
       </div>
-
-      {/* ================== MODAL ================== */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setIsModalOpen(false)}
-            aria-label="Close modal"
-          />
-
-          <div className="relative z-[1000] w-[94vw] max-w-2xl rounded-2xl bg-white p-6 shadow-2xl">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <div className="text-xs font-extrabold tracking-widest text-neutral-500">CHOOSE VEHICLE</div>
-                <div className="mt-1 text-xl font-extrabold text-neutral-900">Available vehicles & prices</div>
-
-                {activeTab === "LOCAL" && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {LOCAL_PACKAGES.map((p) => {
-                      const active = p.key === localPkg;
-                      return (
-                        <button
-                          key={p.key}
-                          type="button"
-                          onClick={async () => {
-                            setLocalPkg(p.key);
-                            // If modal already open, recompute quotes instantly
-                            setLoadingQuotes(true);
-                            setQuoteError(null);
-                            setQuotes([]);
-                            try {
-                              const c = city.trim();
-                              if (!c) throw new Error("Please enter/select a city.");
-
-                              const pkg = LOCAL_PACKAGES.find((x) => x.key === p.key) ?? LOCAL_PACKAGES[0];
-
-                              const computed = VEHICLES.map((v) => ({
-                                kind: "LOCAL" as const,
-                                key: v.key,
-                                name: v.name,
-                                packageKey: pkg.key,
-                                packageLabel: pkg.label,
-                                hoursIncluded: pkg.hoursIncluded,
-                                kmIncluded: pkg.kmIncluded,
-                                basePrice: v.local.baseByPackage[pkg.key],
-                                postKmRate: v.local.postKmRate,
-                                postHrRate: v.local.postHrRate,
-                              })).sort((a, b) => a.basePrice - b.basePrice);
-
-                              setQuotes(computed as any);
-                            } catch (e: any) {
-                              setQuoteError(e?.message || "Something went wrong");
-                            } finally {
-                              setLoadingQuotes(false);
-                            }
-                          }}
-                          className={[
-                            "rounded-lg border px-3 py-2 text-sm font-extrabold tracking-wide",
-                            active
-                              ? "bg-black text-yellow-400 border-black"
-                              : "bg-white text-black border-neutral-200 hover:bg-neutral-50",
-                          ].join(" ")}
-                        >
-                          {p.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-
-                {quotes[0]?.kind === "OUTSTATION" ? (
-                  <div className="mt-1 text-sm text-neutral-600">
-                    Estimated distance: <span className="font-semibold">{quotes[0].distanceKm.toFixed(1)} km</span>
-                  </div>
-                ) : quotes[0]?.kind === "LOCAL" ? (
-                  <div className="mt-1 text-sm text-neutral-600">
-                    Package selected: <span className="font-semibold">{quotes[0].packageLabel}</span>
-                  </div>
-                ) : null}
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="rounded-lg bg-black text-white px-3 py-2 text-sm font-semibold hover:bg-neutral-900 transition"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="mt-6">
-              {loadingQuotes ? (
-                <div className="rounded-xl border border-neutral-200 p-4 text-sm text-neutral-700">Calculating prices…</div>
-              ) : quoteError ? (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{quoteError}</div>
-              ) : quotes.length === 0 ? (
-                <div className="rounded-xl border border-neutral-200 p-4 text-sm text-neutral-700">No quotes.</div>
-              ) : (
-                <div className="space-y-3">
-                  {quotes.map((q) => {
-                    if (q.kind === "LOCAL") {
-                      return (
-                        <button
-                          key={q.key}
-                          type="button"
-                          className="w-full rounded-xl border border-neutral-200 p-4 text-left transition hover:bg-neutral-50"
-                          onClick={() => alert(`Selected: ${q.name} - ₹${q.basePrice} (${q.packageLabel})`)}
-                        >
-                          <div className="flex items-start justify-between gap-4">
-                            <div>
-                              <div className="text-base font-extrabold text-neutral-900">{q.name}</div>
-                              <div className="mt-1 text-sm text-neutral-600">
-                                Package: <span className="font-semibold">{q.packageLabel}</span>
-                              </div>
-                              <div className="mt-2 text-xs text-neutral-500">
-                                Post limit: <span className="font-semibold">₹{q.postKmRate}/km</span> •{" "}
-                                <span className="font-semibold">₹{q.postHrRate}/hr</span>
-                              </div>
-                            </div>
-
-                            <div className="text-right">
-                              <div className="text-xs font-bold tracking-widest text-neutral-500">BASE</div>
-                              <div className="mt-1 text-lg font-extrabold text-neutral-900">₹{q.basePrice}</div>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    }
-
-                    // OUTSTATION
-                    return (
-                      <button
-                        key={q.key}
-                        type="button"
-                        className="w-full rounded-xl border border-neutral-200 p-4 text-left transition hover:bg-neutral-50"
-                        onClick={() => alert(`Selected: ${q.name} - ₹${q.price}`)}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <div>
-                            <div className="text-base font-extrabold text-neutral-900">{q.name}</div>
-                            <div className="mt-1 text-sm text-neutral-600">AC • Verified driver • Safe ride</div>
-                          </div>
-
-                          <div className="text-right">
-                            <div className="text-xs font-bold tracking-widest text-neutral-500">TOTAL</div>
-                            <div className="mt-1 text-lg font-extrabold text-neutral-900">₹{q.price}</div>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6 text-xs text-neutral-500">
-              Final fare may vary due to route changes, tolls, or waiting time (if applicable).
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

@@ -65,7 +65,7 @@ export const ServicesSection = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#facc15] font-black text-sm tracking-[0.4em] uppercase block"
+            className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block"
           >
             OUR
           </motion.span>
@@ -120,12 +120,12 @@ export const ServicesSection = () => {
                   {service.features.map((feature, fIndex) => (
                     <div key={fIndex} className="flex flex-col items-center text-center gap-4">
 
-                      {/* Bigger Yellow Icon */}
-                      <div className="w-14 h-14 rounded-full bg-[#facc15] flex items-center justify-center text-black shadow-md transition-transform duration-300 group-hover:scale-110">
-                        {React.cloneElement(feature.icon, { className: "w-6 h-6" })}
+                      {/* Bigger Icon - Black Circle, Yellow Icon */}
+                      <div className="w-14 h-14 rounded-full bg-black flex items-center justify-center text-[#facc15] shadow-md transition-transform duration-300 group-hover:scale-110">
+                        {React.cloneElement(feature.icon, { className: "w-6 h-6 text-[#facc15]" })}
                       </div>
 
-                      <span className="text-[11px] md:text-xs font-black text-neutral-700 uppercase leading-tight tracking-wider">
+                      <span className="text-[10px] md:text-[11px] font-semibold text-neutral-600 uppercase leading-tight tracking-wide">
                         {feature.label}
                       </span>
                     </div>

@@ -29,11 +29,11 @@ export default function HeroSection() {
 
           {/* ================= TEXT ================= */}
           <div className="relative z-20 mx-auto max-w-6xl px-4 pt-24 lg:pt-32 text-center">
-            <p className="text-lg sm:text-xl lg:text-4xl font-extrabold tracking-[0.3em] text-yellow-400">
+            <p className="text-lg sm:text-xl lg:text-4xl font-bold tracking-[0.05em] text-yellow-400">
               BOOK CAB NOW
             </p>
 
-            <h1 className="mt-2 text-3xl sm:text-5xl lg:text-8xl font-extrabold tracking-tight text-white">
+            <h1 className="mt-2 text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-white">
               +123 4567 8900
             </h1>
 

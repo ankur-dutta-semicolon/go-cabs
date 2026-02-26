@@ -48,7 +48,7 @@ export const TariffsSection = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#facc15] font-black text-sm tracking-[0.4em] uppercase block"
+            className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block"
           >
             Our
           </motion.span>

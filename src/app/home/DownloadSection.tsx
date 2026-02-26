@@ -6,7 +6,7 @@ import { Apple, PlayCircle } from 'lucide-react';
 
 export const DownloadSection = () => {
   return (
-    <section className="bg-white py-12 px-4 overflow-hidden">
+    <section className="bg-white pt-12 pb-0 px-4 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -14,7 +14,7 @@ export const DownloadSection = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#facc15] font-black text-sm tracking-[0.4em] uppercase block"
+            className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block"
           >
             Download
           </motion.span>

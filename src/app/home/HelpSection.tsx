@@ -31,7 +31,7 @@ export const HelpSection = () => {
             <div className="w-1.5 h-5 bg-[#facc15] -skew-x-12" />
             <div className="w-1.5 h-5 bg-black -skew-x-12" />
           </div>
-          <span className="text-[#facc15] font-black text-sm tracking-[0.4em] uppercase">
+          <span className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block">
             Need Assistance?
           </span>
         </motion.div>
