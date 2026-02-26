@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type CarType = "SALOON" | "ESTATE" | "7 SEATER" | "8 SEATER" | "EXECUTIVE";
+type CarType = "HATCHBACK" | "SEDAN" | "SUV" | "7 SEATER" | "PREMIUM";
 
 interface CarData {
   id: CarType;
@@ -13,40 +13,40 @@ interface CarData {
 
 const fleetData: CarData[] = [
   {
-    id: "SALOON",
-    image: "/images/hero-taxi1.webp",
-    description: "Standard family size saloon car can accommodate 4 passengers and 2 cases"
+    id: "HATCHBACK",
+    image: "/images/hatchback.webp",
+    description: "Standard family size HATCHBACK car can accommodate 4 passengers and 2 cases"
   },
   {
-    id: "ESTATE",
-    image: "/images/hero-taxi1.webp",
+    id: "SEDAN",
+    image: "/images/sedan.webp",
     description: "Ideal for extra luggage, can accommodate 4 passengers and 4 cases"
   },
   {
-    id: "7 SEATER",
-    image: "/images/hero-taxi1.webp",
+    id: "SUV",
+    image: "/images/suv.webp",
     description: "Perfect for larger groups, can accommodate 6 passengers and 4 cases"
   },
   {
-    id: "8 SEATER",
-    image: "/images/hero-taxi1.webp",
+    id: "7 SEATER",
+    image: "/images/7-seater.webp",
     description: "Maximum capacity for groups, can accommodate 8 passengers and 6 cases"
   },
   {
-    id: "EXECUTIVE",
-    image: "/images/hero-taxi1.webp",
+    id: "PREMIUM",
+    image: "/images/premium.webp",
     description: "Premium travel experience, can accommodate 3 passengers and 2 cases"
   }
 ];
 
 export const FleetSection = () => {
-  const [activeTab, setActiveTab] = useState<CarType>("SALOON");
+  const [activeTab, setActiveTab] = useState<CarType>("HATCHBACK");
 
   const currentCar = fleetData.find(car => car.id === activeTab)!;
 
   return (
     <section className="bg-white py-20 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Title */}
         <h2 className="text-center text-neutral-500 font-bold text-xl md:text-2xl uppercase tracking-widest mb-12">
           Minicab For Your Daily Essential Travel

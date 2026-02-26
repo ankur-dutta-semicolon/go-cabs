@@ -41,7 +41,7 @@ export const TestimonialsSection = () => {
         {/* <div className="absolute inset-0 bg-black/90" /> */}
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
         {/* Header */}
         <div className="text-center mb-20">
           <motion.span 

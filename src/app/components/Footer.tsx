@@ -16,10 +16,10 @@ export const Footer = () => {
   return (
     <footer className="relative bg-[#050505] text-white pt-32 pb-12 overflow-hidden">
       {/* Background Pattern - Subtle Grid */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
-        style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}
       />
-      
+
       {/* Decorative Glows */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-taxi-yellow/5 rounded-full -translate-y-1/2 blur-[120px]" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-taxi-yellow/5 rounded-full translate-y-1/2 blur-[120px]" />
@@ -36,9 +36,9 @@ export const Footer = () => {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent" />
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-6 md:px-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24 mb-32">
-          
+
           {/* About Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -179,14 +179,27 @@ export const Footer = () => {
         </div>
 
         {/* Copyright Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 text-center md:text-left">
+
           <p className="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">
             © {new Date().getFullYear()} GO CAB DURGAPUR. ALL RIGHTS RESERVED.
           </p>
-          <div className="flex items-center gap-8">
-            <a href="#" className="text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-taxi-yellow transition-colors">Privacy Policy</a>
-            <a href="#" className="text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-taxi-yellow transition-colors">Terms of Service</a>
+
+          <div className="flex items-center justify-center gap-8">
+            <a
+              href="#"
+              className="text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-taxi-yellow transition-colors"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#"
+              className="text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-taxi-yellow transition-colors"
+            >
+              Terms of Service
+            </a>
           </div>
+
         </div>
       </div>
     </footer>

@@ -19,14 +19,14 @@ const tariffs: Tariff[] = [
     title: "ECONOMY CLASS",
     description: "Quisque sollicitudin feugiat risus, eu posuere ex euismod eu. Phasellus hendrerit, massa efficitur.",
     price: "$1,5/MI",
-    image: "/images/hero-taxi1.webp",
+    image: "/images/economy.webp",
   },
   {
     id: "standard",
     title: "STANDARD CLASS",
     description: "Quisque sollicitudin feugiat risus, eu posuere ex euismod eu. Phasellus hendrerit, massa efficitur.",
     price: "$1,5/MI",
-    image: "/images/hero-taxi1.webp",
+    image: "/images/standard.webp",
     isFeatured: true,
   },
   {
@@ -34,25 +34,29 @@ const tariffs: Tariff[] = [
     title: "BUSINESS CLASS",
     description: "Quisque sollicitudin feugiat risus, eu posuere ex euismod eu. Phasellus hendrerit, massa efficitur.",
     price: "$1,5/MI",
-    image: "/images/hero-taxi1.webp",
+    image: "/images/business.webp",
   }
 ];
 
 export const TariffsSection = () => {
   return (
     <section className="bg-white py-24 px-4 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-24">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block"
+            className="inline-flex items-center justify-center 
+                     bg-[#facc15] text-black 
+                     font-black text-lg md:text-xl 
+                     tracking-[0.15em] uppercase 
+                     px-7 py-2.5 rounded-lg shadow-lg shadow-yellow-500/30"
           >
-            Our
+            OUR
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -72,16 +76,15 @@ export const TariffsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={`relative flex flex-col items-center text-center px-10 pb-16 pt-48 transition-all duration-500 ${
-                tariff.isFeatured 
-                  ? "bg-[#facc15] z-10 shadow-2xl md:scale-110" 
+              className={`relative flex flex-col items-center text-center px-10 pb-16 pt-48 transition-all duration-500 ${tariff.isFeatured
+                  ? "bg-[#facc15] z-10 shadow-2xl md:scale-110"
                   : "bg-neutral-50"
-              }`}
+                }`}
             >
               {/* Protruding Car Image */}
               <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-[420px] px-6">
-                <img 
-                  src={tariff.image} 
+                <img
+                  src={tariff.image}
                   alt={tariff.title}
                   className="w-full h-auto drop-shadow-2xl"
                   referrerPolicy="no-referrer"
@@ -92,16 +95,14 @@ export const TariffsSection = () => {
               <h3 className="text-black font-black text-2xl md:text-3xl uppercase tracking-tight mb-6">
                 {tariff.title}
               </h3>
-              <p className={`text-base md:text-lg leading-relaxed mb-10 max-w-sm ${
-                tariff.isFeatured ? "text-black/70" : "text-neutral-500"
-              }`}>
+              <p className={`text-base md:text-lg leading-relaxed mb-10 max-w-sm ${tariff.isFeatured ? "text-black/70" : "text-neutral-500"
+                }`}>
                 {tariff.description}
               </p>
 
               {/* Price */}
-              <div className={`text-5xl md:text-6xl font-black mb-12 ${
-                tariff.isFeatured ? "text-black" : "text-[#facc15]"
-              }`}>
+              <div className={`text-5xl md:text-6xl font-black mb-12 ${tariff.isFeatured ? "text-black" : "text-[#facc15]"
+                }`}>
                 {tariff.price}
               </div>
 
@@ -109,11 +110,10 @@ export const TariffsSection = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`px-12 py-4 rounded-sm font-black text-sm uppercase tracking-[0.2em] shadow-lg transition-colors ${
-                  tariff.isFeatured 
-                    ? "bg-black text-white hover:bg-neutral-800" 
+                className={`px-12 py-4 rounded-sm font-black text-sm uppercase tracking-[0.2em] shadow-lg transition-colors ${tariff.isFeatured
+                    ? "bg-black text-white hover:bg-neutral-800"
                     : "bg-[#facc15] text-black hover:bg-yellow-400"
-                }`}
+                  }`}
               >
                 Read More
               </motion.button>

@@ -543,7 +543,7 @@ export default function BookingSection() {
 
   return (
     <section className="w-full bg-yellow-400" id="booking">
-      <div className="mx-auto max-w-[1400px] px-4 py-10 md:py-20">
+      <div className="mx-auto max-w-7xl px-4 py-10 md:py-20">
         <div className="flex justify-center">
           <span className="rounded-md bg-black px-6 py-3 text-base sm:text-xl font-extrabold tracking-widest text-yellow-400 shadow-lg">
             BEST IN CITY
@@ -554,7 +554,7 @@ export default function BookingSection() {
           TRUSTED CAB SERVICES IN DURGAPUR
         </h2>
 
-        <div className="mx-auto mt-10 max-w-[1400px] rounded-2xl bg-white px-6 py-10 shadow-2xl sm:px-10">
+        <div className="mx-auto mt-10 max-w-7xl rounded-2xl bg-white px-6 py-10 shadow-2xl sm:px-10">
           <div className="flex justify-center">
             <div className="flex w-full max-w-3xl overflow-hidden rounded-md border border-neutral-300 bg-white">
               {tabs.map((t) => {

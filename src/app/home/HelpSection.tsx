@@ -19,25 +19,32 @@ export const HelpSection = () => {
 
   return (
     <section className="bg-white py-10 px-6">
-      <div className="max-w-[1400px] mx-auto text-center">
+      <div className="max-w-7xl mx-auto text-center">
         {/* Top Label */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex items-center justify-center gap-3 mb-8"
+          className="flex items-center justify-center gap-4 mb-8"
         >
+          {/* Decorative Bars */}
           <div className="flex gap-1.5">
             <div className="w-1.5 h-5 bg-[#facc15] -skew-x-12" />
             <div className="w-1.5 h-5 bg-black -skew-x-12" />
           </div>
-          <span className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block">
+
+          {/* Highlighted Text */}
+          <span className="inline-flex items-center justify-center 
+                   bg-[#facc15] text-black 
+                   font-extrabold text-base md:text-lg lg:text-xl 
+                   tracking-[0.2em] uppercase 
+                   px-6 py-2 rounded-md">
             Need Assistance?
           </span>
         </motion.div>
 
         {/* Main Heading */}
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -48,16 +55,16 @@ export const HelpSection = () => {
         </motion.h2>
 
         {/* Description */}
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           className="text-neutral-500 text-base md:text-xl leading-relaxed mb-16 max-w-5xl mx-auto"
         >
-          Go Cab provides reliable, affordable, and safe taxi services across Durgapur and nearby cities. 
-          Whether you need a local city ride, airport transfer, railway station pickup, or an outstation trip, 
-          our professional drivers and well-maintained vehicles ensure a smooth travel experience. 
+          Go Cab provides reliable, affordable, and safe taxi services across Durgapur and nearby cities.
+          Whether you need a local city ride, airport transfer, railway station pickup, or an outstation trip,
+          our professional drivers and well-maintained vehicles ensure a smooth travel experience.
           Available 24/7, we are committed to delivering punctual service with transparent pricing and maximum comfort.
         </motion.p>
 
@@ -70,7 +77,7 @@ export const HelpSection = () => {
           >
             <MapPin className="w-5 h-5 text-[#facc15]" /> Find Us On Google
           </motion.button>
-          
+
           <motion.a
             href="tel:+919568856576"
             whileHover={{ scale: 1.05 }}

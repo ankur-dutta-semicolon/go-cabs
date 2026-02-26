@@ -58,23 +58,28 @@ export const ServicesSection = () => {
 
   return (
     <section className="bg-white py-24 px-4">
-      <div className="max-w-[1400px] mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block"
+            className="inline-flex items-center justify-center 
+           bg-[#facc15] text-black 
+           font-black text-lg md:text-xl 
+           tracking-[0.15em] uppercase 
+           px-7 py-2.5 rounded-lg shadow-lg shadow-yellow-500/30"
           >
             OUR
           </motion.span>
+
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-black font-black text-4xl md:text-5xl uppercase tracking-tight mt-1"
+            className="text-black font-black text-4xl md:text-5xl uppercase tracking-tight mt-3"
           >
             SERVICES
           </motion.h2>

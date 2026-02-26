@@ -278,7 +278,7 @@ export default function SelectCabClient() {
 
   return (
     <section className="min-h-screen bg-black text-white pt-32 pb-24">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-7xl px-6">
         {/* HEADER */}
         <div className="flex items-start justify-between gap-4">
           <div>

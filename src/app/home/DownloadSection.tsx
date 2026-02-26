@@ -7,18 +7,22 @@ import { Apple, PlayCircle } from 'lucide-react';
 export const DownloadSection = () => {
   return (
     <section className="bg-white pt-12 pb-0 px-4 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#facc15] font-black text-lg md:text-xl lg:text-2xl tracking-[0.4em] uppercase block"
+            className="inline-flex items-center justify-center
+             bg-[#facc15] text-black
+             font-extrabold text-base md:text-lg lg:text-xl
+             tracking-[0.2em] uppercase
+             px-6 py-2 rounded-md"
           >
             Download
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -31,7 +35,7 @@ export const DownloadSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -43,8 +47,8 @@ export const DownloadSection = () => {
                 Get Exciting New Offers
               </h3>
               <p className="text-neutral-500 text-base leading-relaxed max-w-lg mx-auto lg:mx-0">
-                Quisque sollicitudin feugiat risus, eu posuere ex euismod eu. 
-                Phasellus hendrerit, massa efficitur. Download our app today 
+                Quisque sollicitudin feugiat risus, eu posuere ex euismod eu.
+                Phasellus hendrerit, massa efficitur. Download our app today
                 and enjoy seamless booking experiences with exclusive rewards.
               </p>
             </div>
@@ -80,7 +84,7 @@ export const DownloadSection = () => {
           </motion.div>
 
           {/* Right Image */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30, rotate: 5 }}
             whileInView={{ opacity: 1, x: 0, rotate: 0 }}
             viewport={{ once: true }}
@@ -88,8 +92,8 @@ export const DownloadSection = () => {
           >
             <div className="relative w-full max-w-[400px]">
               {/* Phone Mockup Image */}
-              <img 
-                src="/images/mobile-in-hand.webp" 
+              <img
+                src="/images/mobile-in-hand.webp"
                 alt="Mobile App"
                 className="w-full h-auto "
                 referrerPolicy="no-referrer"
